@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: drplan-service
+  namespace: drplan-app  
+  labels:
+    app: drplan  
+spec:
+  selector:
+    app: drplan  
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP

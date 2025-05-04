@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: kube-system
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush        1
+        Log_Level    info
+        Daemon       Off
+        Parsers_File parsers.conf
+        HTTP_Server  On
+        HTTP_Listen  0.0.0.0
+        HTTP_Port    2020
+        Storage.total_limit_size 512MB
+
+    # ========== [INPUT]: POD 로그 읽기 ==========
+    [INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        Parser docker
+        Tag workload.*
+        Refresh_Interval 5
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+
+    # ========== [FILTER]: Kubernetes 메타데이터 붙이기 ==========
+    [FILTER]
+        Name kubernetes
+        Match workload.*
+        Merge_Log On
+        Keep_Log On
+        K8S-Logging.Parser On
+        K8S-Logging.Exclude On
+
+    # ========== [OUTPUT]: 서울 리전 CloudWatch Logs 전송 ==========
+    [OUTPUT]
+        Name cloudwatch_logs
+        Match workload.*
+        region ap-northeast-2
+        log_group_name /eks/seoul-logs/${kubernetes['namespace_name']}/${kubernetes['labels']['app']}
+        log_stream_prefix ${kubernetes['pod_name']}- 
+        auto_create_group true
+
+  parsers.conf: |
+    [PARSER]
+        Name        docker
+        Format      json
+        Time_Key    time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L
+
