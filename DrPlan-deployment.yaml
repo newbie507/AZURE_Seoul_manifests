@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drplan-app-deployment
-  namespace: drplan-app    
+  namespace: drplan-app
   labels:
     app: drplan
 spec:
-  replicas: 2    
+  replicas: 2
   selector:
     matchLabels:
       app: drplan
@@ -16,7 +16,11 @@ spec:
         app: drplan
     spec:
       containers:
-      - name: drplan-app-container
-        image: 253490772403.dkr.ecr.ap-northeast-2.amazonaws.com/drplan-ecr-seoul-repo:latest
-        ports:
-        - containerPort: 8080
+        - name: drplan-app-container
+          image: drplanacrrepo.azurecr.io/drplan-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: acr-auth-secre
+

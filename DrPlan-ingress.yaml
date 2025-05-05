@@ -6,13 +6,9 @@ metadata:
   labels:
     app: drplan
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/group.name: eks-seoul-group
-    alb.ingress.kubernetes.io/group.order: '1'
-    alb.ingress.kubernetes.io/healthcheck-path: /index.jsp
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: alb
+  ingressClassName: nginx
   rules:
   - http:
       paths:
@@ -24,7 +20,7 @@ spec:
             port:
               number: 8080
       - path: /index.jsp
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: drplan-service
