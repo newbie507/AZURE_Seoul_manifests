@@ -1,20 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: drplan-app-seoul 
-  namespace: seoul-argocd
+  name: drplan-app
+  namespace: azure-argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/newbie507/AWS_Seoul_manifests.git'
+    repoURL: https://github.com/newbie507/AZURE_Seoul_manifests.git
     targetRevision: main
     path: .
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: drplan-app
+    server: https://kubernetes.default.svc
+    namespace: drplan-app-seoul
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+
