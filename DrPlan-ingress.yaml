@@ -3,40 +3,34 @@ kind: Ingress
 metadata:
   name: drplan-ingress
   namespace: drplan-app
-  labels:
-    app: drplan
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - http:
-      paths:
-      # 파일 경로는 ImplementationSpecific로 처리
-      - path: /index.jsp
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: drplan-service
-            port:
-              number: 8080
-
-      # /contents 이하 모든 요청은 Prefix
-      - path: /contents
-        pathType: Prefix
-        backend:
-          service:
-            name: drplan-service
-            port:
-              number: 8080
-
-      # 그 외 루트(/) 경로도 Prefix
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: drplan-service
-            port:
-              number: 8080
+    - host: www.nohty94.shop
+      http:
+        paths:
+          - path: /index.jsp
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: drplan-service
+                port:
+                  number: 8080
+          - path: /contents
+            pathType: Prefix
+            backend:
+              service:
+                name: drplan-service
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: drplan-service
+                port:
+                  number: 8080
 

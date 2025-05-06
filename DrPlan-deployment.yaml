@@ -7,20 +7,29 @@ metadata:
     app: drplan
 spec:
   replicas: 2
+
+  # ← 여기에 strategy를 추가하세요
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%        # 신규 파드를 한꺼번에 다 올리도록
+      maxUnavailable: 0     # 기존 파드를 바로 모두 내리도록
+
   selector:
     matchLabels:
       app: drplan
+
   template:
     metadata:
       labels:
         app: drplan
     spec:
+      imagePullSecrets:
+        - name: acr-secret    # 시크릿 이름도 올바르게 설정
       containers:
         - name: drplan-app-container
           image: drplanacrrepo.azurecr.io/drplan-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
-      imagePullSecrets:
-        - name: acr-auth-secret
 

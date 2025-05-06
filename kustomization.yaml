@@ -1,12 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - DrPlan-deployment.yaml
-  - DrPlan-service.yaml
-  - DrPlan-ingress.yaml
+- DrPlan-deployment.yaml
+- DrPlan-service.yaml
+- DrPlan-ingress.yaml
 
 images:
-  - name: drplanacrrepo.azurecr.io/drplan-app
-    newName: drplanacrrepo.azurecr.io/drplan-app
-    newTag: 1e2ed6d5-1746523485
-
+- name: drplanacrrepo.azurecr.io/drplan-app
+  newTag: 772fd386-1746524227
