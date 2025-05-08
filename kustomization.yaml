@@ -7,4 +7,4 @@ resources:
 
 images:
 - name: drplanacrrepo.azurecr.io/drplan-app
-  newTag: f08076f2-1746536845
+  newTag: e2a39cf6-1746730994
