@@ -5,27 +5,12 @@ metadata:
   namespace: drplan-app
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
     - host: www.nohty94.shop
       http:
         paths:
-          - path: /index.jsp
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: drplan-service
-                port:
-                  number: 8080
-          - path: /contents
-            pathType: Prefix
-            backend:
-              service:
-                name: drplan-service
-                port:
-                  number: 8080
           - path: /
             pathType: Prefix
             backend:
@@ -33,4 +18,5 @@ spec:
                 name: drplan-service
                 port:
                   number: 8080
+
 

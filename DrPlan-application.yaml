@@ -11,7 +11,7 @@ spec:
     path: .
   destination:
     server: https://kubernetes.default.svc
-    namespace: drplan-app-seoul
+    namespace: drplan-app
   syncPolicy:
     automated:
       prune: true

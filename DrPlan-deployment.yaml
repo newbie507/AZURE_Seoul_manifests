@@ -6,19 +6,10 @@ metadata:
   labels:
     app: drplan
 spec:
-  replicas: 2
-
-  # ← 여기에 strategy를 추가하세요
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 100%        # 신규 파드를 한꺼번에 다 올리도록
-      maxUnavailable: 0     # 기존 파드를 바로 모두 내리도록
-
+  replicas: 1 
   selector:
     matchLabels:
       app: drplan
-
   template:
     metadata:
       labels:
